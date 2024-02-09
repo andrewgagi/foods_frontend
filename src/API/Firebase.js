@@ -1,24 +1,22 @@
-import firebase from 'firebase';
-import 'firebase/storage';
-import 'firebase/firestore';
+import firebase from "firebase";
+import "firebase/storage";
+import "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBUuWZiHBGDH_PVs9IqR9T36VQnD-ZHNsw",
-  authDomain: "hosting-2c2e6.firebaseapp.com",
-  projectId: "hosting-2c2e6",
-  storageBucket: "hosting-2c2e6.appspot.com",
-  messagingSenderId: "137438084125",
-  appId: "1:137438084125:web:a0dbf82fb9017555e01af4"
+  apiKey: "AIzaSyCkV-io4in-5Gcn_0rTVnuF90lDiKvRq_o",
+  authDomain: "dbfg-db198.firebaseapp.com",
+  projectId: "dbfg-db198",
+  storageBucket: "dbfg-db198.appspot.com",
+  messagingSenderId: "591278921742",
+  appId: "1:591278921742:web:300fc5a59b7c555dcdc45f",
 };
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 
-
 const db = app.firestore();
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-
-export {provider , auth , db };
+export { provider, auth, db };
