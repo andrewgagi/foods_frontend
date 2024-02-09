@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "dbfg-db198"
-  }
+  },
+  "targets": {
+    "dbfg-db198": {
+      "hosting": {
+        "web": [
+          "dbfg-db198"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
