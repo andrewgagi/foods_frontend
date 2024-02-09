@@ -1,79 +1,90 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-// cart state 
-const initialState = {
-  shopCartDetails:{
-    id:'',
-    title:'',
-    price:'',
-    image:'',
-    quantity:0
+// Define the initial state for the shopping cart
+
+// Create a slice for managing the shopping cart state
+const ShopCartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    shopCartDetails: {
+      id: "",
+      title: "",
+      price: "",
+      image: "",
+      quantity: 0,
+    },
+    shopCartProducts: [], // Initialize as an empty array
   },
-  shopCartProducts:[]
-}
-
-export const ShopCartSlice = createSlice({
-  name: 'counter',
-  initialState,
   reducers: {
-    addProduct:(state , action) => {
-      // add details 
-      if (state.shopCartProducts.length === 0 ) {
-        state.shopCartDetails.id = action.payload.id;
-        state.shopCartDetails.title = action.payload.title;
-        state.shopCartDetails.price = action.payload.price;
-        state.shopCartDetails.quantity = action.payload.quantity;
-        state.shopCartDetails.image = action.payload.image;
-        // set details to shopCartProducts
-        state.shopCartProducts = [state.shopCartDetails, ...state.shopCartProducts]
-      }else {
-        let check = false ;
-        state.shopCartProducts.forEach((item , key) =>{
-          if (item.id === action.payload.id) {
-            state.shopCartProducts[key].quantity++;
-            check = true ;
-          } 
-        })
+    // Reducer to add a product to the shopping cart
+    addProduct: (state, action) => {
+      const { id, title, price, image, quantity } = action.payload;
 
-        if (!check) {
-          state.shopCartDetails.id = action.payload.id;
-          state.shopCartDetails.title = action.payload.title;
-          state.shopCartDetails.price = action.payload.price;
-          state.shopCartDetails.quantity = action.payload.quantity;
-          state.shopCartDetails.image = action.payload.image;
-          // set details to shopCartProducts
-          state.shopCartProducts = [state.shopCartDetails, ...state.shopCartProducts]
-        }
+      const existingProductIndex = state.shopCartProducts.findIndex(
+        (product) => product.id === id
+      );
+
+      if (existingProductIndex !== -1) {
+        // If the product already exists in the cart, increase its quantity
+        state.shopCartProducts[existingProductIndex].quantity += quantity;
+      } else {
+        // If the product is not in the cart, add it
+        state.shopCartProducts.push({
+          id,
+          title,
+          price,
+          image,
+          quantity,
+        });
       }
     },
-    increaseQuantity:(state , action) => {
-      state.shopCartProducts.forEach((item , key) =>{
-        if (item.id === action.payload.id) {
-          state.shopCartProducts[key].quantity++;
-        } 
-      })
-    },
-    decreaseQuantity:(state , action) => {
-      state.shopCartProducts.forEach((item , key) =>{
-        if (item.id === action.payload.id) {
-          const quantity =  state.shopCartProducts[key].quantity;
-          if(quantity > 1 ) {
-            state.shopCartProducts[key].quantity--;
-          }
-        } 
-      })
-    },
-    removeProduct:(state , action) => {
-      state.shopCartProducts = state.shopCartProducts.filter(item => item.id !== action.payload);
-    },
-    cleanShoppingCart:(state) => {
-      state.shopCartProducts = []
+
+    // Reducer to increase the quantity of a product in the shopping cart
+    increaseQuantity: (state, action) => {
+      const { id } = action.payload;
+      const product = state.shopCartProducts.find(
+        (product) => product.id === id
+      );
+      if (product) {
+        product.quantity++;
+      }
     },
 
+    // Reducer to decrease the quantity of a product in the shopping cart
+    decreaseQuantity: (state, action) => {
+      const { id } = action.payload;
+      const product = state.shopCartProducts.find(
+        (product) => product.id === id
+      );
+      if (product && product.quantity > 1) {
+        product.quantity--;
+      }
+    },
+
+    // Reducer to remove a product from the shopping cart
+    removeProduct: (state, action) => {
+      const id = action.payload;
+
+      state.shopCartProducts = state.shopCartProducts.filter(
+        (product) => product.id !== id
+      );
+    },
+
+    // Reducer to clean the shopping cart (remove all products)
+    cleanShoppingCart: (state) => {
+      state.shopCartProducts = [];
+    },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { addProduct , removeProduct , increaseQuantity , decreaseQuantity , cleanShoppingCart} = ShopCartSlice.actions
+// Export action creators generated for each case reducer function
+export const {
+  addProduct,
+  increaseQuantity,
+  decreaseQuantity,
+  removeProduct,
+  cleanShoppingCart,
+} = ShopCartSlice.actions;
 
-export default ShopCartSlice.reducer
+// Export the reducer function generated by createSlice
+export default ShopCartSlice.reducer;
