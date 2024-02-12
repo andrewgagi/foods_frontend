@@ -11,15 +11,15 @@ function OurProducts() {
   const [pasteDishes, setPasteDishes] = useState([]);
   const { name, phone } = useParams();
   // filter data
+  console.log(name);
 
   const filterData = (type) => {
     const dishes = data.filter((item) => item.data_type === type);
     setPasteDishes(dishes);
   };
   useEffect(() => {
-    filterData("branded_food");
-    console.log(filterData("branded_food"));
-  }, []);
+    setPasteDishes(data.filter((item) => item.data_type === "branded_food"));
+  }, [data]);
 
   return (
     <>
