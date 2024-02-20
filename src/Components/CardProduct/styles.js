@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   media: {
-    height: 250,
-    width: 250,
+    height: 220,
+    width: 220,
     margin: "auto",
-    borderRadius: "20%",
+    borderRadius: "8%",
     display: "flex",
     objectFit: "none",
     paddingTop: "10px",
